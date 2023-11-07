@@ -1,18 +1,16 @@
 <script>
 import PostCard from './PostCard.vue';
 import axios from 'axios';
-
+import { store } from '../../data/store';
 export default {
     data() {
         return {
             posts: [],
-            api: {
-                baseUrl: 'http://127.0.0.1:8000/api/',
-            }
+
         }
     },
     methods: {
-        fetchPosts(uri = this.api.baseUrl + 'posts') {
+        fetchPosts(uri = store.api.baseUrl + 'posts') {
             axios.get(uri).then((response) => {
                 this.posts = response.data.data;
             });

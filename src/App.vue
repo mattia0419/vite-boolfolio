@@ -5,17 +5,24 @@ export default {
   data() {
     return {
       posts: [],
+      api: {
+        baseUrl: 'http://127.0.0.1:8000/api/',
+      }
     }
 
   },
   components: {
     PostList
   },
+  methods: {
+    fetchPosts(uri = this.api.baseUrl + 'posts') {
+      axios.get(uri).then((response) => {
+        this.posts = response.data.data;
+      });
+    }
+  },
   created() {
-    axios.get('http://127.0.0.1:8000/api/posts').then((response) => {
-      // console.log(response.data.data);
-      this.posts = response.data.data;
-    });
+    this.fetchPosts();
   }
 }
 </script>
@@ -24,7 +31,7 @@ export default {
 <template>
   <h1>hello world</h1>
   <hr>
-  <PostList></PostList>
+  <PostList :posts="posts"></PostList>
 </template>
 
 
